@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private JsonPlaceHolderApi jsonPlaceHolderApi;
+
     private static final String TAG = "MyActivity";
     private TextView textViewResult;
     private Button nearby;
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private double Latitude;
     private double Longitude;
 
+    private SearchView search;
+
+    String query;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         textViewResult = (TextView) findViewById(R.id.text_view_result);
         nearby = (Button) findViewById(R.id.nearBy);
 
+        search = (SearchView) findViewById(R.id.mySearch);
 
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -60,11 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            doMySearch(query);
-        }
+//        Intent intent = getIntent();
+//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+//            String query = intent.getStringExtra(SearchManager.QUERY);
+//            doMySearch(query);
+//        }
+
+
 
         nearby.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +91,23 @@ public class MainActivity extends AppCompatActivity {
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
+//        getSearch(19.0760, 72.8777);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                textViewResult.setText("");
+                query = s;
+                getSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+//                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
 
 
     }
@@ -137,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(ctx, "Latitude is = "+latitude +"Longitude is ="+longitude, Toast.LENGTH_LONG).show();
                 Longitude =  mobileLocation.getLongitude();
                 Latitude = mobileLocation.getLatitude();
-                getSearch(Latitude, Longitude);
+                getSearch(19.0760, 72.8777);
 
             } else {
                 System.out.println("in find location 4");
@@ -170,12 +196,12 @@ public class MainActivity extends AppCompatActivity {
                 String content = "";
 
                 ArrayList<NearbyRestaurant> nr = post.getNearbyRestaurants();
-                Log.e(TAG, String.valueOf(nr.get(0)));
+                Log.e(TAG, String.valueOf(nr));
 
                 content += "locality: " + nr.get(0).getRestaurant().getName() + "\n";
-//                content += "getStatus: " + post.getLink() + "\n";
-//                content += "popularity: " + post.getPopularity() + "\n";
-//                content += "nearby_resturants: " + post.getNearbyRestaurants() + "\n";
+                content += "getStatus: " + post.getLink() + "\n";
+                content += "popularity: " + post.getPopularity() + "\n";
+                content += "nearby_resturants: " + post.getNearbyRestaurants() + "\n";
 
 
 
@@ -192,5 +218,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void getSearch(String query) {
+        Call<Post1> call = jsonPlaceHolderApi
+                .getSearch(query);
+
+        call.enqueue(new Callback<Post1>() {
+            @Override
+            public void onResponse(Call<Post1> call, Response<Post1> response) {
+
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+
+
+
+                Post1 search = response.body();
+                Log.e(TAG, String.valueOf(search));
+
+                String content = "";
+
+
+                content += "locationSuggestion: "+ search.getLocationSuggestions();
+                content += "status: "+ search.getStatus();
+
+                content += "entity_id: " + search.getLocationSuggestions();
+                String entity_id = "entity_id: " + search.getLocationSuggestions().get(0).getEntityId();
+
+                textViewResult.append(entity_id);
+
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Post1> call, Throwable t) {
+                Log.e(TAG, "I am here");
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+
 
 }

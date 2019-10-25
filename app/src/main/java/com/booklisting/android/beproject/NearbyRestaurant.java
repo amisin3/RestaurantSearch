@@ -18,4 +18,10 @@ public class NearbyRestaurant {
         this.restaurant = restaurant;
     }
 
+    @Override
+    public String toString() {
+        return "NearbyRestaurant{" +
+                "restaurant=" + restaurant +
+                '}';
+    }
 }

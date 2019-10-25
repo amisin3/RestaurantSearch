@@ -393,4 +393,45 @@ public class Restaurant {
         this.eventsUrl = eventsUrl;
     }
 
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "r=" + r +
+                ", apikey='" + apikey + '\'' +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", location=" + location +
+                ", switchToOrderMenu=" + switchToOrderMenu +
+                ", cuisines='" + cuisines + '\'' +
+                ", averageCostForTwo=" + averageCostForTwo +
+                ", priceRange=" + priceRange +
+                ", currency='" + currency + '\'' +
+                ", offers=" + offers +
+                ", zomatoEvents=" + zomatoEvents +
+                ", opentableSupport=" + opentableSupport +
+                ", isZomatoBookRes=" + isZomatoBookRes +
+                ", mezzoProvider='" + mezzoProvider + '\'' +
+                ", isBookFormWebView=" + isBookFormWebView +
+                ", bookFormWebViewUrl='" + bookFormWebViewUrl + '\'' +
+                ", bookAgainUrl='" + bookAgainUrl + '\'' +
+                ", thumb='" + thumb + '\'' +
+                ", userRating=" + userRating +
+                ", photosUrl='" + photosUrl + '\'' +
+                ", menuUrl='" + menuUrl + '\'' +
+                ", featuredImage='" + featuredImage + '\'' +
+                ", medioProvider=" + medioProvider +
+                ", hasOnlineDelivery=" + hasOnlineDelivery +
+                ", isDeliveringNow=" + isDeliveringNow +
+                ", includeBogoOffers=" + includeBogoOffers +
+                ", deeplink='" + deeplink + '\'' +
+                ", orderUrl='" + orderUrl + '\'' +
+                ", orderDeeplink='" + orderDeeplink + '\'' +
+                ", isTableReservationSupported=" + isTableReservationSupported +
+                ", hasTableBooking=" + hasTableBooking +
+                ", bookUrl='" + bookUrl + '\'' +
+                ", eventsUrl='" + eventsUrl + '\'' +
+                '}';
+    }
 }

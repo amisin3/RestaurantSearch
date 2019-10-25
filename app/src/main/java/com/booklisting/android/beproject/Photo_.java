@@ -25,7 +25,7 @@ public class Photo_ {
     private Integer photoId;
     @SerializedName("uuid")
     @Expose
-    private Integer uuid;
+    private Double uuid;
     @SerializedName("type")
     @Expose
     private String type;
@@ -78,11 +78,11 @@ public class Photo_ {
         this.photoId = photoId;
     }
 
-    public Integer getUuid() {
+    public Double getUuid() {
         return uuid;
     }
 
-    public void setUuid(Integer uuid) {
+    public void setUuid(Double uuid) {
         this.uuid = uuid;
     }
 
