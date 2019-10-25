@@ -14,6 +14,9 @@ public class UserRating {
     @SerializedName("rating_color")
     @Expose
     private String ratingColor;
+    @SerializedName("rating_obj")
+    @Expose
+    private RatingObj ratingObj;
     @SerializedName("votes")
     @Expose
     private String votes;
@@ -40,6 +43,14 @@ public class UserRating {
 
     public void setRatingColor(String ratingColor) {
         this.ratingColor = ratingColor;
+    }
+
+    public RatingObj getRatingObj() {
+        return ratingObj;
+    }
+
+    public void setRatingObj(RatingObj ratingObj) {
+        this.ratingObj = ratingObj;
     }
 
     public String getVotes() {

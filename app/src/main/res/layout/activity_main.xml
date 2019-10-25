@@ -8,6 +8,12 @@
     tools:context=".MainActivity">
 
 
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search"
+        android:iconifiedByDefault="false"/>
+
     <Button
         android:id="@+id/nearBy"
         android:layout_width="wrap_content"

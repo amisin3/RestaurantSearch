@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BeProject</string>
+    <string name="search_hint">City Name</string>
 </resources>

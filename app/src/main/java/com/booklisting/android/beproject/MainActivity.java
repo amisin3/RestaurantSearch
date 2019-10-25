@@ -1,6 +1,8 @@
 package com.booklisting.android.beproject;
 
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -50,10 +52,18 @@ public class MainActivity extends AppCompatActivity {
         textViewResult = (TextView) findViewById(R.id.text_view_result);
         nearby = (Button) findViewById(R.id.nearBy);
 
+
+
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
 
+        }
+
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            doMySearch(query);
         }
 
         nearby.setOnClickListener(new View.OnClickListener() {
@@ -162,10 +172,10 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<NearbyRestaurant> nr = post.getNearbyRestaurants();
                 Log.e(TAG, String.valueOf(nr.get(0)));
 
-                content += "locality: " + post.getLocality() + "\n";
-                content += "getStatus: " + post.getLink() + "\n";
-                content += "popularity: " + post.getPopularity() + "\n";
-                content += "nearby_resturants: " + post.getNearbyRestaurants() + "\n";
+                content += "locality: " + nr.get(0).getRestaurant().getName() + "\n";
+//                content += "getStatus: " + post.getLink() + "\n";
+//                content += "popularity: " + post.getPopularity() + "\n";
+//                content += "nearby_resturants: " + post.getNearbyRestaurants() + "\n";
 
 
 

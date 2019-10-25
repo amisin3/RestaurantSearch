@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Post {
 
-    @SerializedName("locality")
+    @SerializedName("location")
     @Expose
-    private Locality locality;
+    private Location location;
     @SerializedName("popularity")
     @Expose
     private Popularity popularity;
@@ -20,12 +20,12 @@ public class Post {
     @Expose
     private ArrayList<NearbyRestaurant> nearbyRestaurants = null;
 
-    public Locality getLocality() {
-        return locality;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocality(Locality locality) {
-        this.locality = locality;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Popularity getPopularity() {
@@ -55,7 +55,7 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" +
-                "locality=" + locality +
+                "location=" + location +
                 ", popularity=" + popularity +
                 ", link='" + link + '\'' +
                 ", nearbyRestaurants=" + nearbyRestaurants +
