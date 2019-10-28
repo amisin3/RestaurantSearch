@@ -19,10 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 
 import retrofit2.Call;
@@ -189,25 +191,23 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 Post post = response.body();
                 Log.d(TAG, String.valueOf(post));
 
 
                 String content = "";
+                Gson gson = new Gson();
+
 
                 ArrayList<NearbyRestaurant> nr = post.getNearbyRestaurants();
-                Log.e(TAG, String.valueOf(nr));
-
-                content += "locality: " + nr.get(0).getRestaurant().getName() + "\n";
-                content += "getStatus: " + post.getLink() + "\n";
-                content += "popularity: " + post.getPopularity() + "\n";
-                content += "nearby_resturants: " + post.getNearbyRestaurants() + "\n";
+                String json = gson.toJson(nr);
 
 
+                Intent i = new Intent(getApplicationContext() ,ResturantList.class);
+                i.putExtra("nearbyRestaurant", json);
 
-
-                textViewResult.append(content);
-
+                startActivity(i);
 
             }
 

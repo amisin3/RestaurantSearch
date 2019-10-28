@@ -3,7 +3,9 @@ package com.booklisting.android.beproject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
 
     @SerializedName("entity_type")
     @Expose
@@ -105,4 +107,18 @@ public class Location {
         this.countryName = countryName;
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "entityType='" + entityType + '\'' +
+                ", entityId=" + entityId +
+                ", title='" + title + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", cityId=" + cityId +
+                ", cityName='" + cityName + '\'' +
+                ", countryId=" + countryId +
+                ", countryName='" + countryName + '\'' +
+                '}';
+    }
 }

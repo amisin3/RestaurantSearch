@@ -3,7 +3,9 @@ package com.booklisting.android.beproject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Location_ {
+import java.io.Serializable;
+
+public class Location_ implements Serializable {
 
     @SerializedName("address")
     @Expose

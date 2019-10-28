@@ -3,7 +3,9 @@ package com.booklisting.android.beproject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ZomatoEvent {
+import java.io.Serializable;
+
+public class ZomatoEvent implements Serializable {
 
     @SerializedName("event")
     @Expose

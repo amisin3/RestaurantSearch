@@ -3,7 +3,9 @@ package com.booklisting.android.beproject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class R_ {
+import java.io.Serializable;
+
+public class R_ implements Serializable {
 
     @SerializedName("has_menu_status")
     @Expose

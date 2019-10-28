@@ -3,9 +3,10 @@ package com.booklisting.android.beproject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
 
     @SerializedName("R")
     @Expose
@@ -112,6 +113,44 @@ public class Restaurant {
     @SerializedName("events_url")
     @Expose
     private String eventsUrl;
+
+    public Restaurant(R_ r, String apikey, String id, String name, String url, Location_ location, Integer switchToOrderMenu, String cuisines, Integer averageCostForTwo, Integer priceRange, String currency, List<Object> offers, List<ZomatoEvent> zomatoEvents, Integer opentableSupport, Integer isZomatoBookRes, String mezzoProvider, Integer isBookFormWebView, String bookFormWebViewUrl, String bookAgainUrl, String thumb, UserRating userRating, String photosUrl, String menuUrl, String featuredImage, Integer medioProvider, Integer hasOnlineDelivery, Integer isDeliveringNow, Boolean includeBogoOffers, String deeplink, String orderUrl, String orderDeeplink, Integer isTableReservationSupported, Integer hasTableBooking, String bookUrl, String eventsUrl) {
+        this.r = r;
+        this.apikey = apikey;
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.location = location;
+        this.switchToOrderMenu = switchToOrderMenu;
+        this.cuisines = cuisines;
+        this.averageCostForTwo = averageCostForTwo;
+        this.priceRange = priceRange;
+        this.currency = currency;
+        this.offers = offers;
+        this.zomatoEvents = zomatoEvents;
+        this.opentableSupport = opentableSupport;
+        this.isZomatoBookRes = isZomatoBookRes;
+        this.mezzoProvider = mezzoProvider;
+        this.isBookFormWebView = isBookFormWebView;
+        this.bookFormWebViewUrl = bookFormWebViewUrl;
+        this.bookAgainUrl = bookAgainUrl;
+        this.thumb = thumb;
+        this.userRating = userRating;
+        this.photosUrl = photosUrl;
+        this.menuUrl = menuUrl;
+        this.featuredImage = featuredImage;
+        this.medioProvider = medioProvider;
+        this.hasOnlineDelivery = hasOnlineDelivery;
+        this.isDeliveringNow = isDeliveringNow;
+        this.includeBogoOffers = includeBogoOffers;
+        this.deeplink = deeplink;
+        this.orderUrl = orderUrl;
+        this.orderDeeplink = orderDeeplink;
+        this.isTableReservationSupported = isTableReservationSupported;
+        this.hasTableBooking = hasTableBooking;
+        this.bookUrl = bookUrl;
+        this.eventsUrl = eventsUrl;
+    }
 
     public R_ getR() {
         return r;
