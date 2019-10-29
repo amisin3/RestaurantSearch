@@ -3,13 +3,17 @@ package com.booklisting.android.beproject;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -22,6 +26,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     private Context mContext;
     private List<RestaurantCard> restaurantCardList;
+    private String TAG = RestaurantAdapter.class.getSimpleName();
 
     public RestaurantAdapter(Context mContext, List<RestaurantCard> restaurantCardList) {
         this.mContext = mContext;
@@ -47,6 +52,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         restaurantViewHolder.textViewShortDesc.setText(restaurantCard.getShortdesc());
         restaurantViewHolder.textViewRating.setText(String.valueOf(restaurantCard.getRating()));
         restaurantViewHolder.textViewPrice.setText("Average Cost For Two"+String.valueOf(restaurantCard.getPrice()));
+        if(!restaurantCard.getFeaturedImageUrl().isEmpty())
+            Picasso.get().load(restaurantCard.getFeaturedImageUrl()).into(restaurantViewHolder.imageView);
 //        try {
 //
 //            if(restaurantCard.getUrl()!=""){
@@ -82,7 +89,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             textViewShortDesc = itemView.findViewById(R.id.textViewShortDesc);
             textViewRating = itemView.findViewById(R.id.textViewRating);
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
-//            imageView = itemView.findViewById(R.id.imageView);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }

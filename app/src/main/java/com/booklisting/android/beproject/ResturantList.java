@@ -57,8 +57,9 @@ public class ResturantList extends AppCompatActivity {
                             nr.get(i).getRestaurant().getName(),
                             nr.get(i).getRestaurant().getLocation().getAddress(),
                             Double.parseDouble(nr.get(i).getRestaurant().getUserRating().getAggregateRating()),
-                            Double.parseDouble(""+nr.get(i).getRestaurant().getAverageCostForTwo())
-//                            image
+                            Double.parseDouble(""+nr.get(i).getRestaurant().getAverageCostForTwo()),
+                            nr.get(i).getRestaurant().getFeaturedImage()
+
                     )
             );
 

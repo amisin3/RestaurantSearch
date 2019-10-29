@@ -10,16 +10,17 @@ public class RestaurantCard {
     private String shortdesc;
     private double rating;
     private double price;
-//    private String url;
+    private String featuredImageUrl;
 
 
-    public RestaurantCard(int id, String title, String shortdesc, double rating, double price ) {
+
+    public RestaurantCard(int id, String title, String shortdesc, double rating, double price, String featuredImageUrl ) {
         this.id = id;
         this.title = title;
         this.shortdesc = shortdesc;
         this.rating = rating;
         this.price = price;
-//        this.url = url;
+        this.featuredImageUrl = featuredImageUrl;
 
     }
 
@@ -43,9 +44,10 @@ public class RestaurantCard {
         return price;
     }
 
-//    public String getUrl() {
-//        return url;
-//    }
+    public String getFeaturedImageUrl() {
+        return featuredImageUrl;
+    }
+
 
 
 }
