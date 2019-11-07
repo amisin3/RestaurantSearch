@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import retrofit2.http.Url;
 
 public class RestaurantCard {
-    private int id;
+    private String id;
     private String title;
     private String shortdesc;
     private double rating;
@@ -14,7 +14,7 @@ public class RestaurantCard {
 
 
 
-    public RestaurantCard(int id, String title, String shortdesc, double rating, double price, String featuredImageUrl ) {
+    public RestaurantCard(String id, String title, String shortdesc, double rating, double price, String featuredImageUrl ) {
         this.id = id;
         this.title = title;
         this.shortdesc = shortdesc;
@@ -24,7 +24,7 @@ public class RestaurantCard {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

@@ -1,6 +1,7 @@
 package com.booklisting.android.beproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
@@ -45,7 +46,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder restaurantViewHolder, int position) {
         //getting the product of the specified position
-        RestaurantCard restaurantCard = restaurantCardList.get(position);
+        final RestaurantCard restaurantCard = restaurantCardList.get(position);
 
         //binding the data with the viewholder views
         restaurantViewHolder.textViewTitle.setText(restaurantCard.getTitle());
@@ -54,22 +55,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         restaurantViewHolder.textViewPrice.setText("Average Cost For Two"+String.valueOf(restaurantCard.getPrice()));
         if(!restaurantCard.getFeaturedImageUrl().isEmpty())
             Picasso.get().load(restaurantCard.getFeaturedImageUrl()).into(restaurantViewHolder.imageView);
-//        try {
-//
-//            if(restaurantCard.getUrl()!=""){
-//                URL url = new URL(restaurantCard.getUrl());
-//                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//                restaurantViewHolder.imageView.setImageBitmap(bmp);
-//            }
-//            else{
-//                restaurantViewHolder.imageView.setImageResource(R.drawable.dellinspiron);
-//            }
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
+
+        restaurantViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent restaurantDetail = new Intent(mContext, RestaurantDeatilActivity.class);
+                restaurantDetail.putExtra("res_id", restaurantCard.getId());
+                mContext.startActivity(restaurantDetail);
+            }
+        });
     }
 
     @Override

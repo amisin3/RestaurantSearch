@@ -13,16 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.booklisting.android.beproject.search.Restaurant;
+import com.booklisting.android.beproject.search.Restaurant_;
+import com.booklisting.android.beproject.search.SearchResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -32,6 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListenerner;
+
 
     private Location mobileLocation;
     private double Latitude;
@@ -57,10 +65,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewResult = (TextView) findViewById(R.id.text_view_result);
         nearby = (Button) findViewById(R.id.nearBy);
-
         search = (SearchView) findViewById(R.id.mySearch);
+
 
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -98,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                textViewResult.setText("");
+//                textViewResult.setText("");
                 query = s;
                 getSearch(query);
                 return false;
@@ -110,6 +117,17 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+            }
+        });
+
 
 
     }
@@ -165,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(ctx, "Latitude is = "+latitude +"Longitude is ="+longitude, Toast.LENGTH_LONG).show();
                 Longitude =  mobileLocation.getLongitude();
                 Latitude = mobileLocation.getLatitude();
-                getSearch(19.0760, 72.8777);
+                getSearch(Latitude, Longitude);
 
             } else {
                 System.out.println("in find location 4");
@@ -179,8 +197,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getSearch(double Latitude, double Longitude) {
+
+        Log.d(TAG, "getSearch: "+ Double.parseDouble(String.format("%.6f", Latitude)) + " " + Double.parseDouble(String.format("%.6f", Longitude)));
+
         Call<Post> call = jsonPlaceHolderApi
-                .getSearch(Latitude, Longitude);
+                .getSearch(19, 72);
+
+//        19.0643418   lat
+//        72.8356988    lon
 
         call.enqueue(new Callback<Post>() {
             @Override
@@ -194,6 +218,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Post post = response.body();
                 Log.d(TAG, String.valueOf(post));
+
+
 
 
                 String content = "";
@@ -213,8 +239,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
-                Log.e(TAG, "I am here");
-                textViewResult.setText(t.getMessage());
+                t.printStackTrace();
+                Log.e(TAG, "I am here " + t.getMessage());
+//                textViewResult.setText(t.getMessage());
             }
         });
     }
@@ -244,9 +271,12 @@ public class MainActivity extends AppCompatActivity {
                 content += "status: "+ search.getStatus();
 
                 content += "entity_id: " + search.getLocationSuggestions();
-                String entity_id = "entity_id: " + search.getLocationSuggestions().get(0).getEntityId();
+                int entity_id = search.getLocationSuggestions().get(0).getEntityId();
+                Log.d(TAG, String.valueOf(entity_id));
 
-                textViewResult.append(entity_id);
+//                textViewResult.append(entity_id);
+
+                getSearchUsingEntity(entity_id);
 
 
 
@@ -260,6 +290,55 @@ public class MainActivity extends AppCompatActivity {
                 textViewResult.setText(t.getMessage());
             }
         });
+    }
+
+    private void getSearchUsingEntity(int entity_id) {
+        Call<SearchResult> call = jsonPlaceHolderApi
+                .searchEntity(entity_id, 8);
+
+        call.enqueue(new Callback<SearchResult>() {
+            @Override
+            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
+                SearchResult result = response.body();
+                Log.d(TAG, String.valueOf(result));
+                ArrayList<RestaurantCard> restaurantCards = new ArrayList<>();
+//                for(Restaurant restaurant : result.getRestaurants()){
+//
+//                    Restaurant_ currRestaurant = restaurant.getRestaurant();
+//                    restaurantCards.add(
+//                            new RestaurantCard(currRestaurant.getId(),
+//                                    currRestaurant.getName(),
+//                                    currRestaurant.getLocation().getAddress(),
+//                                    Double.parseDouble(currRestaurant.getUserRating().getAggregateRating()),
+//                                    currRestaurant.getAverageCostForTwo(),
+//                                    currRestaurant.getFeaturedImage()
+//                                    )
+//
+//
+//                    );
+//
+//                }
+
+
+                Gson gson = new Gson();
+
+
+                List<Restaurant> restaurants = result.getRestaurants();
+                String json = gson.toJson(restaurants);
+
+
+                Intent i = new Intent(getApplicationContext() ,ResturantList.class);
+                i.putExtra("restaurantsfromentity", json);
+
+                startActivity(i);
+            }
+
+            @Override
+            public void onFailure(Call<SearchResult> call, Throwable t) {
+
+            }
+        });
+
     }
 
 

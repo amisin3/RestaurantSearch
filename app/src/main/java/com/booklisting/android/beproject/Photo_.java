@@ -19,7 +19,7 @@ public class Photo_ {
     private String md5sum;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private String id;
     @SerializedName("photo_id")
     @Expose
     private Integer photoId;
@@ -62,11 +62,11 @@ public class Photo_ {
         this.md5sum = md5sum;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
